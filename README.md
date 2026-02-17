@@ -152,13 +152,12 @@ This table is optimized for analytical querying and dashboard integration.
 
 Create a .env file in the root directory:
 
-AZURE_STORAGE_CONNECTION_STRING=
-AZURE_BLOB_CONTAINER=eurostat
-
-AZURE_SQL_SERVER=your-server.database.windows.net
-AZURE_SQL_DATABASE=europubdata_db
-AZURE_SQL_USERNAME=your_admin
-AZURE_SQL_PASSWORD=your_password
+* AZURE_STORAGE_CONNECTION_STRING= 
+* AZURE_BLOB_CONTAINER=eurostat
+* AZURE_SQL_SERVER=your-server.database.windows.net
+* AZURE_SQL_DATABASE=europubdata_db
+* AZURE_SQL_USERNAME=your_admin
+* AZURE_SQL_PASSWORD=your_password
 
 ## 📊 Current Dataset
 
