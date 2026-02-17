@@ -1,10 +1,10 @@
-📦 European Public Data Pipeline
+# 📦 European Public Data Pipeline
 
 A hybrid Azure-based data engineering pipeline for ingesting, validating, transforming, and warehousing European public macroeconomic data from Eurostat (HICP – Harmonised Index of Consumer Prices).
 
 This project demonstrates end-to-end cloud data architecture using Azure Blob Storage and Azure SQL Database.
 
-🚀 Project Overview
+## 🚀 Project Overview
 
 This pipeline ingests official Eurostat macroeconomic data and processes it through a structured multi-layer architecture:
 
@@ -16,7 +16,8 @@ Eurostat API (JSON-stat)
 
 The pipeline is fully modular, environment-driven, and cloud-ready.
 
-🏗 Architecture
+## 🏗 Architecture
+
                  ┌─────────────────────┐
                  │  Eurostat API       │
                  │  (JSON-stat)        │
@@ -45,7 +46,7 @@ The pipeline is fully modular, environment-driven, and cloud-ready.
                │ Azure SQL Database      │
                │ Gold (fact_hicp)        │
                └─────────────────────────┘
-🧰 Tech Stack
+## 🧰 Tech Stack
 
 Python 3.11+
 
@@ -63,26 +64,36 @@ Parquet (pyarrow)
 
 Git + GitHub
 
-📂 Project Structure
-src/
+## 📂 Project Structure
+
+```text
+european-public-data-pipeline/
 │
-├── ingestion/
-│   ├── ingestion_hicp_raw.py
-│   ├── process_hicp_silver.py
+├── src/
+│   ├── ingestion/
+│   │   ├── ingestion_hicp_raw.py
+│   │   └── process_hicp_silver.py
+│   │
+│   ├── quality/
+│   │   └── check_hicp_quality.py
+│   │
+│   ├── db/
+│   │   ├── sql.py
+│   │   └── load_hicp_to_sql.py
+│   │
+│   ├── storage/
+│   │   └── blob.py
+│   │
+│   └── __init__.py
 │
-├── quality/
-│   └── check_hicp_quality.py
-│
-├── db/
-│   ├── sql.py
-│   └── load_hicp_to_sql.py
-│
-├── storage/
-│   └── blob.py
-│
-└── __init__.py
-🔄 Pipeline Stages
-1️⃣ Bronze — Raw Ingestion
+├── .env.example
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+## 🔄 Pipeline Stages
+### 1️⃣ Bronze — Raw Ingestion
 
 Fetch HICP data from Eurostat and store full JSON-stat payload in Azure Blob Storage.
 
@@ -91,7 +102,7 @@ python -m src.ingestion.ingestion_hicp_raw
 Output example:
 
 raw/hicp/prc_hicp_midx/geo=LU/coicop=CP00/ts=20260213_130854.json
-2️⃣ Silver — Structured Processing
+### 2️⃣ Silver — Structured Processing
 
 Parse JSON-stat into a structured Parquet dataset.
 
@@ -107,7 +118,7 @@ unit	Index unit (e.g. I15)
 value	Inflation index value
 processed_at_utc	Processing timestamp
 raw_blob	Reference to raw data source
-3️⃣ Data Quality Layer
+### 3️⃣ Data Quality Layer
 
 Validation checks include:
 
@@ -125,7 +136,7 @@ python -m src.quality.check_hicp_quality
 
 If validation fails, SQL loading is blocked.
 
-4️⃣ Gold — SQL Warehouse Load
+### 4️⃣ Gold — SQL Warehouse Load
 
 Load validated data into Azure SQL:
 
@@ -137,7 +148,7 @@ dbo.fact_hicp
 
 This table is optimized for analytical querying and dashboard integration.
 
-⚙ Configuration
+## ⚙ Configuration
 
 Create a .env file in the root directory:
 
@@ -148,16 +159,11 @@ AZURE_SQL_SERVER=your-server.database.windows.net
 AZURE_SQL_DATABASE=europubdata_db
 AZURE_SQL_USERNAME=your_admin
 AZURE_SQL_PASSWORD=your_password
-📊 Current Dataset
 
-Dataset:
+## 📊 Current Dataset
 
-prc_hicp_midx
-
-Luxembourg (LU)
-
-COICOP CP00 (All items)
-
-Monthly data
-
-Base year index (I15)
+Dataset: prc_hicp_midx
+Geography: Luxembourg (LU)
+COICOP: CP00 (All items)
+Frequency: Monthly
+Unit: Index (2015 = 100)
